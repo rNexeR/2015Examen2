@@ -3,6 +3,10 @@
 *.lo
 *.o
 *.obj
+<<<<<<< HEAD
+=======
+
+>>>>>>> 70d591bc2c5cd275a403f7e136a16e888e448d19
 # Precompiled Headers
 *.gch
 *.pch
@@ -11,8 +15,15 @@
 *.so
 *.dylib
 *.dll
+<<<<<<< HEAD
 # Fortran module files
 *.mod
+=======
+
+# Fortran module files
+*.mod
+
+>>>>>>> 70d591bc2c5cd275a403f7e136a16e888e448d19
 # Compiled Static libraries
 *.lai
 *.la
