@@ -44,3 +44,29 @@
 	"Evaluador.h"
 	"NodoBinario.h"
 
+1427390309 source:/home/rnexer/Programacion 3/2015Examen2/Evaluador.cpp
+	"Evaluador.h"
+
+1427390309 /home/rnexer/Programacion 3/2015Examen2/Evaluador.h
+	"Planeta.h"
+	"NodoBinario.h"
+	<iostream>
+	<stack>
+	<queue>
+	<set>
+	<map>
+	<list>
+
+1427390309 /home/rnexer/Programacion 3/2015Examen2/Planeta.h
+	<string>
+	<iostream>
+
+1427390309 /home/rnexer/Programacion 3/2015Examen2/NodoBinario.h
+	<iostream>
+
+1427390309 source:/home/rnexer/Programacion 3/2015Examen2/NodoBinario.cpp
+	"NodoBinario.h"
+
+1427390309 source:/home/rnexer/Programacion 3/2015Examen2/Planeta.cpp
+	"Planeta.h"
+

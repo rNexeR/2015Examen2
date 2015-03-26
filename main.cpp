@@ -12,18 +12,41 @@
 #include "NodoBinario.h"
 
 using namespace std;
+int formato = 25;
 
 //Escribe los datos del objeto mascota dado en un archivo binario con el nombre dado en la posicion dada
 //Nota: Se deben poder agregar varias mascotas en un solo archivo
 void escribir(string nombre_archivo, Planeta*planeta, int posicion)
 {
+    ofstream out(nombre_archivo.c_str(), ios::in);
+    out.seekp(posicion*formato);
+    out.write(planeta->nombre.c_str(), 10);
+    int x = planeta->habitantes;
+    out.write((char*)&x, 4);
+    double l = planeta->diametro;
+    out.write((char*)&l, 8);
+    out.write(&planeta->categoria, 1);
+    out.close();
 }
 
 //Devuelve una mascota previamente escrita (con la funcion escribir()) en un archivo binario con nombre dado en la posicion dada
 //Nota: Se deben poder leer varias mascotas de un solo archivo
 Planeta* leer(string nombre_archivo, int posicion)
 {
-    Planeta *p = new Planeta("", -1, -1.0, ' ');
+    ifstream in(nombre_archivo.c_str());
+    in.seekg(posicion*formato);
+    char* n = new char[10];
+    string no;
+    int habitantes;
+    double diametro;
+    char tipo;
+
+    in.read(n,10);
+    no = n;
+    in.read((char*)&habitantes, 4);
+    in.read((char*)&diametro, 8);
+    in.read(&tipo, 1);
+    Planeta *p = new Planeta(no, habitantes, diametro, tipo);
     return p;
 }
 
@@ -32,6 +55,11 @@ Planeta* leer(string nombre_archivo, int posicion)
 string getFondo(stack<string> mi_pila)
 {
     string resultado;
+    int y = mi_pila.size();
+    for(int x = 0; x<y; x++){
+        resultado = mi_pila.top();
+        mi_pila.pop();
+    }
     return resultado;
 }
 
@@ -40,6 +68,11 @@ string getFondo(stack<string> mi_pila)
 char getUltimo(queue<char> mi_cola)
 {
     char resultado;
+    int y = mi_cola.size();
+    for(int x = 0; x<y; x++){
+        resultado = mi_cola.front();
+        mi_cola.pop();
+    }
     return resultado;
 }
 
@@ -47,6 +80,11 @@ char getUltimo(queue<char> mi_cola)
 vector<int> convertirAVector(list<int> mi_lista)
 {
     vector<int> mi_vector;
+
+    for(list<int>::iterator i = mi_lista.begin(); i != mi_lista.end(); i++){
+        mi_vector.push_back((*i));
+    }
+
     return mi_vector;
 }
 
@@ -58,7 +96,15 @@ vector<int> convertirAVector(list<int> mi_lista)
 map<int,int> getTabla(int num)
 {
     map<int,int> mi_mapa;
+    for(int x = 1; x<=10; x++)
+        mi_mapa[x] = num*x;
     return mi_mapa;
+}
+
+void insertarSet(set<string> *mi_set, set<string> de_set){
+    for (set<string>::iterator i = de_set.begin(); i != de_set.end(); i++){
+        (*mi_set).insert((*i));
+    }
 }
 
 //Dado un arbol con raiz dada, devuelve un set que contenga todos los valores almacenados en el arbol
@@ -66,6 +112,12 @@ map<int,int> getTabla(int num)
 set<string> getValores(NodoBinario* raiz)
 {
     set<string> mi_set;
+    if(raiz!=NULL){
+        mi_set.insert(raiz->valor);
+        set<string> der = getValores(raiz->hijo_der), izq = getValores(raiz->hijo_izq);
+        insertarSet(&mi_set, der);
+        insertarSet(&mi_set, izq);
+    }
     return mi_set;
 }
 
@@ -73,6 +125,15 @@ set<string> getValores(NodoBinario* raiz)
 //Nota los valores estan almacendados en el atributo valor en la clase NodoBinario
 void buscarYReemplazar(NodoBinario* raiz, string buscado, string reemplazo)
 {
+    if(raiz!=NULL){
+        if (raiz->valor==buscado){
+            (raiz->valor=reemplazo);
+            return;
+        }
+        buscarYReemplazar(raiz->hijo_der, buscado, reemplazo);
+        buscarYReemplazar(raiz->hijo_izq, buscado, reemplazo);
+    }
+
 }
 
 int main ()
